@@ -25,6 +25,9 @@ const Window = ({
         ...initialPosition,
         ...initialSize,
       }}
+      className="transition-transform duration-150 ease-out shadow-xl"
+      dragGrid={[1, 1]} 
+      resizeGrid={[1, 1]}
       minWidth={300}
       minHeight={200}
       bounds="window"
