@@ -41,26 +41,46 @@ const useWindowStore = create<WindowStore>((set) => ({
         };
     }),
 
-    closeWindow: (id) => set((state) => {
-        windows: state.windows.filter(window => window.id !== id);
-    }),
+    closeWindow: (id) => set((state) => ({
+        windows: state.windows.filter(window => window.id !== id)
+    })),
 
     focusWindow: (id) => set((state) => {
         const newZIndex = state.maxZIndex + 1;
         return {
             windows: state.windows.map(window => 
                 window.id === id
-            )
+                ? {...window, zIndex: newZIndex}
+                : window
+            ),  
+            maxZIndex: newZIndex,
+            focusedWindow: id
         }
     }),
 
-    toggleMinimize: (id) => set((state) => ()),
-
-    updatePosition: (id, position) => set((state) => ({})),
-
-    updateSize(id, size) => set((state) => ({
+    toggleMinimize: (id) => set((state) => ({
         windows: state.windows.map(window => 
-            window.id === id ? { ... window, size} : window 
+            window.id === id
+            ? { ...window, minimized: !window.minimized}
+            : window
+        )
+    })),
+
+    updatePosition: (id, position) => set((state) => ({
+        windows: state.windows.map(window => 
+            window.id === id 
+            ? {...window, position} 
+            : window
+        )
+    })),
+
+    updateSize: (id, size) => set((state) => ({
+        windows: state.windows.map(window => 
+            window.id === id 
+            ? {...window, size}
+            : window
         )
     }))
 }));
+
+export default useWindowStore;
