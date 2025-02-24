@@ -66,9 +66,9 @@ const Taskbar = () => {
             )}
 
             {/* System Tray */}
-            <div className=
+            {/* <div className=
 
-            </div> 
+            </div>  */}
         </div>
     )
 }
