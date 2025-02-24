@@ -45,9 +45,9 @@ const Window = ({
         topLeft: true,
         topRight: true,
       }}
-      className={twMerge("transition-transform duration-150 ease-out shadow-xl border-[3px] bg-gray-800 rounded-lg overflow-hidden border-[#e06d75]", className)}
+      className={twMerge("transition-transform duration-150 ease-out shadow-xl border-[3px] rounded-lg overflow-hidden border-[#e06d75] backdrop-blur-sm", className)}
     >
-      <div className="drag-handle flex items-center justify-between px-4 py-2 bg-gray-700 cursor-move select-none border-b-[3px] border-[#e06d75]">
+      <div className="drag-handle flex items-center justify-between px-4 py-2 bg-gray-700/80 cursor-move select-none border-b-[3px] border-[#e06d75] backdrop-blur-sm">
         <h3 className="text-gray-200 font-semibold">{title}</h3>
         <div className="flex space-x-3">
           {onMinimize && (
@@ -66,7 +66,7 @@ const Window = ({
           </button>
         </div>
       </div>
-      <div className="p-4 h-[calc(100%-40px)] text-gray-100 overflow-auto">
+      <div className="p-4 h-[calc(100%-40px)] text-gray-100 overflow-auto bg-gray-800/90">
         {children}
       </div>
     </Rnd>
