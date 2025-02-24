@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const Taskbar = () => {
 
     const [showStartMenu, setShowStartMenu] = useState(false);
-    const [time, setTime] = useState(new Date());
+    // const [time, setTime] = useState(new Date());
 
     const startMenuApps = [
         {id: 'explorer', name: 'File Explorer', icon: FolderIcon },
@@ -14,10 +14,10 @@ const Taskbar = () => {
         {id: 'document', name: 'New Docuement', icon: DocumentIcon }
     ]
 
-    useEffect(() => {
-        const timer = setInterval(() => setTime(new Date()), 1000);
-        return () => clearInterval(timer);
-    }, []);
+    // useEffect(() => {
+    //     const timer = setInterval(() => setTime(new Date()), 1000);
+    //     return () => clearInterval(timer);
+    // }, []);
 
     useEffect(() => {
         const handleClickOutside = () => {

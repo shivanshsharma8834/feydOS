@@ -29,11 +29,11 @@ const Desktop = () => {
     size: { width: number; height: number };
   }>>([]);
 
-  const handleIconMove = (id: string, newPosition: { x: number; y: number }) => {
-    setIcons(prev => prev.map(icon => 
-      icon.id === id ? { ...icon, position: newPosition } : icon
-    ));
-  };
+//   const handleIconMove = (id: string, newPosition: { x: number; y: number }) => {
+//     setIcons(prev => prev.map(icon => 
+//       icon.id === id ? { ...icon, position: newPosition } : icon
+//     ));
+//   };
 
   const openWindow = (type: string) => {
     const newWindow = {
