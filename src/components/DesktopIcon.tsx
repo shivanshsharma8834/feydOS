@@ -36,7 +36,7 @@ const DesktopIcon = ({ id, name, type, position, onDoubleClick }: DesktopIconPro
 
   return (
     <div
-      ref={drag}
+      // ref={drag}
       className="absolute flex flex-col items-center w-20 gap-1 cursor-pointer group"
       style={{
         left: position.x,
