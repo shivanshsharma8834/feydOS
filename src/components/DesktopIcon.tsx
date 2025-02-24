@@ -1,11 +1,11 @@
 "use client"
 import { useDrag } from 'react-dnd';
-import { FolderIcon, CogIcon, DocumentIcon } from '@heroicons/react/24/outline';
+import { FolderIcon, CogIcon, DocumentIcon, ComputerDesktopIcon } from '@heroicons/react/24/outline';
 
 interface DesktopIconProps {
   id: string;
   name: string;
-  type: 'folder' | 'settings' | 'document';
+  type: 'folder' | 'settings' | 'document' | 'home';
   position: { x: number; y: number };
   onDoubleClick: () => void;
 }
@@ -27,6 +27,8 @@ const DesktopIcon = ({ id, name, type, position, onDoubleClick }: DesktopIconPro
         return <CogIcon className="w-12 h-12 text-gray-400" />;
       case 'document':
         return <DocumentIcon className="w-12 h-12 text-green-400" />;
+      case 'home':
+        return <ComputerDesktopIcon className="w-12 h-12 text-orange-400" />
       default:
         return <FolderIcon className="w-12 h-12" />;
     }

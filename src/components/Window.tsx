@@ -1,6 +1,7 @@
 "use client"
 import { Rnd } from 'react-rnd';
 import { XMarkIcon, MinusIcon } from '@heroicons/react/24/outline';
+import { twMerge } from 'tailwind-merge';
 
 interface WindowProps {
   title: string;
@@ -9,6 +10,8 @@ interface WindowProps {
   children: React.ReactNode;
   initialPosition?: { x: number; y: number };
   initialSize?: { width: number; height: number };
+  outlineColor?: string;
+  className?: string;
 }
 
 const Window = ({
@@ -18,6 +21,7 @@ const Window = ({
   onMinimize,
   initialPosition = { x: 100, y: 100 },
   initialSize = { width: 400, height: 300 },
+  className,
 }: WindowProps) => {
   return (
     <Rnd
@@ -25,7 +29,6 @@ const Window = ({
         ...initialPosition,
         ...initialSize,
       }}
-      className="transition-transform duration-150 ease-out shadow-xl"
       dragGrid={[1, 1]} 
       resizeGrid={[1, 1]}
       minWidth={300}
@@ -42,9 +45,9 @@ const Window = ({
         topLeft: true,
         topRight: true,
       }}
-      className="border-2 border-gray-700 bg-gray-800 rounded-lg shadow-xl overflow-hidden"
+      className={twMerge("transition-transform duration-150 ease-out shadow-xl border-[3px] bg-gray-800 rounded-lg overflow-hidden border-[#e06d75]", className)}
     >
-      <div className="drag-handle flex items-center justify-between px-4 py-2 bg-gray-700 cursor-move select-none">
+      <div className="drag-handle flex items-center justify-between px-4 py-2 bg-gray-700 cursor-move select-none border-b-[3px] border-[#e06d75]">
         <h3 className="text-gray-200 font-semibold">{title}</h3>
         <div className="flex space-x-3">
           {onMinimize && (
