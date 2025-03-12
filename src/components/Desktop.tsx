@@ -23,35 +23,6 @@ const Desktop = () => {
 
   const windows = useWindowStore((state) => state.windows);
 
-  // const [windows, setWindows] = useState<Array<{
-  //   id: string;
-  //   type: string;
-  //   title: string;
-  //   position: { x: number; y: number };
-  //   size: { width: number; height: number };
-  // }>>([]);
-
-//   const handleIconMove = (id: string, newPosition: { x: number; y: number }) => {
-//     setIcons(prev => prev.map(icon => 
-//       icon.id === id ? { ...icon, position: newPosition } : icon
-//     ));
-//   };
-
-  // const openWindow = (type: string) => {
-  //   const newWindow = {
-  //     id: `window-${Date.now()}`,
-  //     type,
-  //     title: type.charAt(0).toUpperCase() + type.slice(1),
-  //     position: { x: windows.length * 30 + 100, y: windows.length * 30 + 100 },
-  //     size: { width: 600, height: 400 },
-  //   };
-  //   setWindows(prev => [...prev, newWindow]);
-  // };
-  
-  // const closeWindow = (id: string) => {
-  //   setWindows(prev => prev.filter(window => window.id !== id));
-  // };
-
   const closeWindow = useWindowStore((state) => state.closeWindow);
 
   const openWindow = useWindowStore((state) => state.openWindow);

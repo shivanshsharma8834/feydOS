@@ -1,1 +1,1 @@
-export type WindowTypes = 'folder' | 'settings' | 'document' | 'home';
+export type WindowTypes = 'folder' | 'settings' | 'document' | 'home' | 'explorer';

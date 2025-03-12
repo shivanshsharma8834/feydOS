@@ -1,17 +1,28 @@
 'use client'
 
-import { Battery50Icon, ChevronUpIcon, ClockIcon, CogIcon, DocumentIcon, FolderIcon, SpeakerWaveIcon, WifiIcon } from "@heroicons/react/24/outline";
+import useWindowStore from "@/stores/windowStore";
+import { WindowTypes } from "@/types/windowTypes";
+import { Battery50Icon, ChevronUpIcon, ClockIcon, CogIcon, ComputerDesktopIcon, DocumentIcon, FolderIcon, SpeakerWaveIcon, WifiIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 
-const Taskbar = () => {
+interface startMenuAppsInterface {
+    id: string, 
+    type: WindowTypes,
+    name: string,
+    icon: unknown | null
+}
 
+const Taskbar = () => {
+    const openWindow = useWindowStore((state) => (state.openWindow));
+    const closeWindow = useWindowStore((state) => (state.closeWindow));
+    const windows = useWindowStore((state) => (state.windows));
     const [showStartMenu, setShowStartMenu] = useState(false);
     const [time, setTime] = useState(new Date());
 
-    const startMenuApps = [
-        {id: 'explorer', name: 'File Explorer', icon: FolderIcon },
-        {id: 'settings', name: 'Settings', icon: CogIcon },
-        {id: 'document', name: 'New Docuement', icon: DocumentIcon }
+    const startMenuApps : startMenuAppsInterface[] = [
+        {id: '1', type: 'explorer', name: 'File Explorer', icon: FolderIcon },
+        {id: '2', type: 'settings', name: 'Settings', icon: CogIcon },
+        {id: '3', type: 'document', name: 'New Document', icon: DocumentIcon }
     ]
 
     useEffect(() => {
@@ -26,6 +37,21 @@ const Taskbar = () => {
         document.addEventListener('click', handleClickOutside);
         return () => document.removeEventListener('click', handleClickOutside);
     }, [showStartMenu]);
+
+    const getIcon = (type : WindowTypes) => {
+        switch (type) {
+          case 'folder':
+            return <FolderIcon className="w-6 h-6 text-blue-400" />;
+          case 'settings':
+            return <CogIcon className="w-6 h-6 text-gray-400" />;
+          case 'document':
+            return <DocumentIcon className="w-6 h-6 text-green-400" />;
+          case 'home':
+            return <ComputerDesktopIcon className="w-6 h-6 text-orange-400" />
+          default:
+            return <FolderIcon className="w-6 h-6" />;
+        }
+      };
 
     return (
         // Main Taskbar
@@ -53,7 +79,7 @@ const Taskbar = () => {
                         {startMenuApps.map((app) => (
                              <button
                              key={app.id}
-                             onClick={() => {}}
+                             onClick={() => openWindow(app.type, app.name)}
                              className="flex items-center w-full px-4 py-2 text-gray-300 hover:bg-gray-700/50"
                              >
                                 <app.icon className="w-5 h-5 mr-3 "/>
@@ -66,8 +92,17 @@ const Taskbar = () => {
             )}
 
             {/* Open Windows */}
-            <div className="flex flex-1 items-center h-full ml-2 overflow-x-auto">
-                Open windows
+            <div className="flex flex-row flex-1 items-center h-full ml-2 overflow-x-auto">
+                {windows.map((window) => (
+                    <div 
+                    key={window.id}
+                    className="text-white p-2 transition-colors rounded hover:bg-gray-700/30 flex gap-x-3">
+                    {getIcon(window.type)}
+                    <div>
+                        {window.title}    
+                    </div>
+                    </div>
+                ))}
             </div>
 
             {/* System Tray */}
