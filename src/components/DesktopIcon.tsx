@@ -1,10 +1,11 @@
 "use client"
+import { WindowTypes } from '@/types/windowTypes';
 import { FolderIcon, CogIcon, DocumentIcon, ComputerDesktopIcon } from '@heroicons/react/24/outline';
 
 interface DesktopIconProps {
   id: string;
+  type: WindowTypes;
   name: string;
-  type: 'folder' | 'settings' | 'document' | 'home';
   position: { x: number; y: number };
   onDoubleClick: () => void;
 }

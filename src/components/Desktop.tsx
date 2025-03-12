@@ -4,20 +4,21 @@ import DesktopIcon from '@/components/DesktopIcon';
 import Window from '@/components/Window';
 import HomePage from '@/pages/HomePage';
 import useWindowStore from '@/stores/windowStore';
+import { WindowTypes } from '@/types/windowTypes';
 
-interface DesktopItem {
+interface DesktopIcon {
   id: string;
-  type: 'folder' | 'settings' | 'document' | 'home';
   name: string;
+  type: WindowTypes;
   position: { x: number; y: number };
 }
 
 const Desktop = () => {
-  const [icons, setIcons] = useState<DesktopItem[]>([
-    { id: '1', type: 'folder', name: 'Documents', position: { x: 50, y: 50 } },
-    { id: '2', type: 'settings', name: 'Settings', position: { x: 50, y: 150 } },
-    { id: '3', type: 'document', name: 'Readme', position: { x: 50, y: 250 } },
-    { id: '4', type: 'home', name: 'Home', position: { x: 50, y: 350 } },
+  const [desktopIcons, setDesktopIcons] = useState<DesktopIcon[]>([
+    { id: '1', name: 'Folder', type: 'folder', position: { x: 50, y: 50 } },
+    { id: '2', name: 'Settings', type: 'settings', position: { x: 50, y: 150 } },
+    { id: '3', name: 'Readme', type: 'document', position: { x: 50, y: 250 } },
+    { id: '4', name: 'Home', type: 'home', position: { x: 50, y: 350 } },
   ]);
 
   const windows = useWindowStore((state) => state.windows);
@@ -60,12 +61,12 @@ const Desktop = () => {
       <div className="relative w-screen h-screen bg-gray-900 bg-[url('/background3.jpg')] bg-cover bg-no-repeat bg-center"
       >
         {/* Desktop Icons */}
-        {icons.map((icon) => (
+        {desktopIcons.map((icon) => (
           <DesktopIcon
             key={icon.id}
             id={icon.id}
-            name={icon.name}
             type={icon.type}
+            name={icon.name}
             position={icon.position}
             onDoubleClick={() => openWindow(icon.type)}
           />

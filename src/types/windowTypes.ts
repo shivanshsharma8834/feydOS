@@ -1,0 +1,1 @@
+export type WindowTypes = 'folder' | 'settings' | 'document' | 'home';
