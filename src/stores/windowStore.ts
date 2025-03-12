@@ -1,24 +1,27 @@
+import { WindowTypes } from '@/types/windowTypes';
 import { title } from 'process';
 import { create } from 'zustand';
 
 type Window = {
     id: string;
     title: string;
-    type: 'explorer' | 'settings' | 'document';
+    type: WindowTypes;
     position: { x: number , y: number };
     size: { width: number , height: number };
     zIndex: number;
     minimized: boolean;
+    maximized: boolean;
 };
 
 type WindowStore = {
     windows: Window[];
     focusedWindow: string | null;
     maxZIndex: number;
-    openWindow: (id : string) => void;
+    openWindow: (type : WindowTypes, title: string) => void;
     closeWindow: (id: string) => void;
     focusWindow: (id: string) => void;
     toggleMinimize: (id: string) => void;
+    toggleMaximize: (id: string) => void;
     updatePosition: (id: string, position: { x: number, y: number }) => void;
     updateSize: (id: string, size: { width: number, height: number }) => void; 
 }
@@ -28,25 +31,22 @@ const useWindowStore = create<WindowStore>((set) => ({
     focusedWindow: null,
     maxZIndex: 100,
 
-    openWindow: (type) => set((state) => {
-        const newZIndex = state.maxZIndex + 1;
-        const newWindow = {
+    openWindow: (type, title) => set((state) => {
+        const newWindow : Window = {
             id : `window-${Date.now()}`,
             type: type,
-            title: type.charAt(0).toUpperCase() + type.slice(1),
-            position: {x : state.windows.length * 30 + 100, y : state.windows.length * 30 + 100 },
-            size: { width: 600, height: 400 },
+            title: title,
+            position: { x: state.windows.length * 30 + 100, y: state.windows.length * 30 + 100 },
+            size: {width: 600, height: 400 },
+            zIndex: state.maxZIndex + 1,
+            minimized: false,
+            maximized: false,
         };
 
         return {
-            windows: [...state.windows, {
-                newWindow,
-                zIndex: newZIndex,
-                minimized: false
-            }],
-            maxZIndex: newZIndex,
-            // focusedWindow: `window_${Date.now()}`
-        };
+            windows: [...state.windows, newWindow]
+        }
+
     }),
 
     closeWindow: (id) => set((state) => ({
@@ -70,6 +70,14 @@ const useWindowStore = create<WindowStore>((set) => ({
         windows: state.windows.map(window => 
             window.id === id
             ? { ...window, minimized: !window.minimized}
+            : window
+        )
+    })),
+
+    toggleMaximize: (id) => set((state) => ({
+        windows: state.windows.map(window => 
+            window.id === id 
+            ? { ...window, maximized: !window.maximized}
             : window
         )
     })),

@@ -68,7 +68,7 @@ const Desktop = () => {
             type={icon.type}
             name={icon.name}
             position={icon.position}
-            onDoubleClick={() => openWindow(icon.type)}
+            onDoubleClick={() => openWindow(icon.type, icon.name)}
           />
         ))}
 
