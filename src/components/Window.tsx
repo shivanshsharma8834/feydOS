@@ -1,12 +1,17 @@
 "use client"
 import { Rnd } from 'react-rnd';
-import { XMarkIcon, MinusIcon } from '@heroicons/react/24/outline';
+import { XMarkIcon, MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
 
 interface WindowProps {
   title: string;
   onClose?: () => void;
   onMinimize?: () => void;
+  onMaximize?: () => void;
+  isMinimized: boolean;
+  isMaximized: boolean;
+  zIndex: number;
+  focusWindow: () => void;
   children: React.ReactNode;
   initialPosition?: { x: number; y: number };
   initialSize?: { width: number; height: number };
@@ -19,6 +24,11 @@ const Window = ({
   children,
   onClose,
   onMinimize,
+  onMaximize,
+  zIndex,
+  focusWindow,
+  isMinimized,
+  isMaximized,
   initialPosition = { x: 100, y: 100 },
   initialSize = { width: 400, height: 300 },
   className,
@@ -45,19 +55,30 @@ const Window = ({
         topLeft: true,
         topRight: true,
       }}
+      style={
+        { zIndex: zIndex}
+      }
       className={twMerge("transition-transform duration-150 ease-out shadow-xl border-[3px] rounded-lg overflow-hidden border-[#e06d75] backdrop-blur-sm", className)}
     >
-      <div className="drag-handle flex items-center justify-between px-4 py-2 bg-gray-700/80 cursor-move select-none border-b-[3px] border-[#e06d75] backdrop-blur-sm">
+      <div 
+      onClick={() => focusWindow()}
+      className="drag-handle flex items-center justify-between px-4 py-2 bg-gray-700/80 cursor-move select-none border-b-[3px] border-[#e06d75] backdrop-blur-sm">
         <h3 className="text-gray-200 font-semibold">{title}</h3>
         <div className="flex space-x-3">
-          {onMinimize && (
-            <button
-              onClick={onMinimize}
-              className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400"
-            >
-              <MinusIcon className="w-3 h-3 text-gray-900" />
-            </button>
-          )}
+          <button
+            onClick={onMinimize}
+            className="w-3 h-3 rounded-full bg-yellow-500 hover:bg-yellow-400"
+          >
+            <MinusIcon className="w-3 h-3 text-gray-900" />
+          </button>
+          
+          <button
+          onClick={onMaximize}
+          className="w-3 h-3 rounded-full bg-green-500 hover:bg-green-400"
+          >
+            <PlusIcon className='w-3 h-3 text-gray-900'/>
+          </button>
+
           <button
             onClick={onClose}
             className="w-3 h-3 rounded-full bg-red-500 hover:bg-red-400"
@@ -66,7 +87,9 @@ const Window = ({
           </button>
         </div>
       </div>
-      <div className="p-4 h-[calc(100%-40px)] text-gray-100 overflow-auto bg-gray-800/90">
+      <div
+      onClick={() => focusWindow()}
+      className="p-4 h-[calc(100%-40px)] text-gray-100 overflow-auto bg-gray-800/90">
         {children}
       </div>
     </Rnd>

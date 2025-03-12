@@ -22,10 +22,11 @@ const Desktop = () => {
   ]);
 
   const windows = useWindowStore((state) => state.windows);
-
   const closeWindow = useWindowStore((state) => state.closeWindow);
-
   const openWindow = useWindowStore((state) => state.openWindow);
+  const minimizeWindow = useWindowStore((state) => state.toggleMinimize);
+  const maximizeWindow = useWindowStore((state) => state.toggleMaximize);
+  const focusWindow = useWindowStore((state) => state.focusWindow);
 
   return (
     <div>
@@ -51,6 +52,12 @@ const Desktop = () => {
             initialPosition={window.position}
             initialSize={window.size}
             onClose={() => closeWindow(window.id)}
+            onMinimize={() => minimizeWindow(window.id)}
+            onMaximize={() => maximizeWindow(window.id)}
+            isMaximized={window.minimized}
+            isMinimized={window.maximized}
+            zIndex={window.zIndex}
+            focusWindow={() => focusWindow(window.id)}
           >
             <div className="p-4">
               {window.type === 'folder' && (
