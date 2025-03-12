@@ -1,3 +1,4 @@
+import { title } from 'process';
 import { create } from 'zustand';
 
 type Window = {
@@ -14,7 +15,7 @@ type WindowStore = {
     windows: Window[];
     focusedWindow: string | null;
     maxZIndex: number;
-    openWindow: (config: Omit<Window, 'id' | 'zIndex' | 'minimized'>) => void;
+    openWindow: (id : string) => void;
     closeWindow: (id: string) => void;
     focusWindow: (id: string) => void;
     toggleMinimize: (id: string) => void;
@@ -27,17 +28,24 @@ const useWindowStore = create<WindowStore>((set) => ({
     focusedWindow: null,
     maxZIndex: 100,
 
-    openWindow: (config) => set((state) => {
+    openWindow: (type) => set((state) => {
         const newZIndex = state.maxZIndex + 1;
+        const newWindow = {
+            id : `window-${Date.now()}`,
+            type: type,
+            title: type.charAt(0).toUpperCase() + type.slice(1),
+            position: {x : state.windows.length * 30 + 100, y : state.windows.length * 30 + 100 },
+            size: { width: 600, height: 400 },
+        };
+
         return {
             windows: [...state.windows, {
-                ...config,
-                id: `window_${Date.now()}`,
+                newWindow,
                 zIndex: newZIndex,
                 minimized: false
             }],
             maxZIndex: newZIndex,
-            focusedWindow: `window_${Date.now()}`
+            // focusedWindow: `window_${Date.now()}`
         };
     }),
 

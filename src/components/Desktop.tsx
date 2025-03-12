@@ -1,10 +1,9 @@
 "use client"
 import { useState } from 'react';
-import { DndProvider } from 'react-dnd';
-import { HTML5Backend } from 'react-dnd-html5-backend';
 import DesktopIcon from '@/components/DesktopIcon';
 import Window from '@/components/Window';
 import HomePage from '@/pages/HomePage';
+import useWindowStore from '@/stores/windowStore';
 
 interface DesktopItem {
   id: string;
@@ -21,13 +20,15 @@ const Desktop = () => {
     { id: '4', type: 'home', name: 'Home', position: { x: 50, y: 350 } },
   ]);
 
-  const [windows, setWindows] = useState<Array<{
-    id: string;
-    type: string;
-    title: string;
-    position: { x: number; y: number };
-    size: { width: number; height: number };
-  }>>([]);
+  const windows = useWindowStore((state) => state.windows);
+
+  // const [windows, setWindows] = useState<Array<{
+  //   id: string;
+  //   type: string;
+  //   title: string;
+  //   position: { x: number; y: number };
+  //   size: { width: number; height: number };
+  // }>>([]);
 
 //   const handleIconMove = (id: string, newPosition: { x: number; y: number }) => {
 //     setIcons(prev => prev.map(icon => 
@@ -35,23 +36,27 @@ const Desktop = () => {
 //     ));
 //   };
 
-  const openWindow = (type: string) => {
-    const newWindow = {
-      id: `window-${Date.now()}`,
-      type,
-      title: type.charAt(0).toUpperCase() + type.slice(1),
-      position: { x: windows.length * 30 + 100, y: windows.length * 30 + 100 },
-      size: { width: 600, height: 400 }
-    };
-    setWindows(prev => [...prev, newWindow]);
-  };
+  // const openWindow = (type: string) => {
+  //   const newWindow = {
+  //     id: `window-${Date.now()}`,
+  //     type,
+  //     title: type.charAt(0).toUpperCase() + type.slice(1),
+  //     position: { x: windows.length * 30 + 100, y: windows.length * 30 + 100 },
+  //     size: { width: 600, height: 400 },
+  //   };
+  //   setWindows(prev => [...prev, newWindow]);
+  // };
+  
+  // const closeWindow = (id: string) => {
+  //   setWindows(prev => prev.filter(window => window.id !== id));
+  // };
 
-  const closeWindow = (id: string) => {
-    setWindows(prev => prev.filter(window => window.id !== id));
-  };
+  const closeWindow = useWindowStore((state) => state.closeWindow);
+
+  const openWindow = useWindowStore((state) => state.openWindow);
 
   return (
-    <DndProvider backend={HTML5Backend}>
+    <div>
       <div className="relative w-screen h-screen bg-gray-900 bg-[url('/background3.jpg')] bg-cover bg-no-repeat bg-center"
       >
         {/* Desktop Icons */}
@@ -92,7 +97,7 @@ const Desktop = () => {
           </Window>
         ))}
       </div>
-    </DndProvider>
+    </div>
   );
 };
 

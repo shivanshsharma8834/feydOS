@@ -1,5 +1,4 @@
 "use client"
-import { useDrag } from 'react-dnd';
 import { FolderIcon, CogIcon, DocumentIcon, ComputerDesktopIcon } from '@heroicons/react/24/outline';
 
 interface DesktopIconProps {
@@ -11,13 +10,6 @@ interface DesktopIconProps {
 }
 
 const DesktopIcon = ({ id, name, type, position, onDoubleClick }: DesktopIconProps) => {
-  const [{ isDragging }, drag] = useDrag(() => ({
-    type: 'icon',
-    item: { id, position },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
-  }));
 
   const getIcon = () => {
     switch (type) {
@@ -41,7 +33,6 @@ const DesktopIcon = ({ id, name, type, position, onDoubleClick }: DesktopIconPro
       style={{
         left: position.x,
         top: position.y,
-        opacity: isDragging ? 0.5 : 1,
       }}
       onDoubleClick={onDoubleClick}
     >
