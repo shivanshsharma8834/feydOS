@@ -81,7 +81,7 @@ const Taskbar = () => {
 
     return (
         // Main Taskbar - Styled like Windows Vista
-        <div className="fixed bottom-0 left-0 right-0 h-12 bg-gradient-to-b from-black/80 to-black/95 backdrop-blur-md flex items-center justify-between px-2 border-t border-sky-300/50 shadow-2xl z-50">
+        <div className="fixed bottom-0 left-0 right-0 h-12 bg-gradient-to-b from-black/60 to-black/95 backdrop-blur-md flex items-center justify-between px-2 border-t border-sky-300/50 shadow-2xl z-50">
             {/* Left side: Start Orb and Open Windows */}
             <div className="flex items-center h-full">
                 {/* Start Button and Menu */}
