@@ -10,37 +10,45 @@ interface DesktopIconProps {
   onDoubleClick: () => void;
 }
 
-const DesktopIcon = ({ id, name, type, position, onDoubleClick }: DesktopIconProps) => {
+const DesktopIcon = ({ name, type, position, onDoubleClick }: DesktopIconProps) => {
 
+  // CHANGE: Updated icon colors and added a drop shadow for the Vista look
   const getIcon = () => {
+    const iconStyle = "w-12 h-12 drop-shadow-lg"; // Common style for all icons
     switch (type) {
       case 'folder':
-        return <FolderIcon className="w-12 h-12 text-blue-400" />;
+        return <FolderIcon className={`${iconStyle} text-yellow-500`} />;
       case 'settings':
-        return <CogIcon className="w-12 h-12 text-gray-400" />;
+        return <CogIcon className={`${iconStyle} text-slate-400`} />;
       case 'document':
-        return <DocumentIcon className="w-12 h-12 text-green-400" />;
+        return <DocumentIcon className={`${iconStyle} text-slate-100`} />;
       case 'home':
-        return <ComputerDesktopIcon className="w-12 h-12 text-orange-400" />
+        return <ComputerDesktopIcon className={`${iconStyle} text-blue-300`} />
       default:
-        return <FolderIcon className="w-12 h-12" />;
+        return <FolderIcon className={iconStyle} />;
     }
   };
 
   return (
     <div
-      // ref={drag}
-      className="absolute flex flex-col items-center w-20 gap-1 cursor-pointer group"
+      className="absolute flex flex-col items-center w-24 p-1 rounded-md cursor-pointer transition-colors hover:bg-sky-400/30 focus:bg-sky-500/50 focus:outline-none border border-transparent focus:border-sky-400/60"
       style={{
         left: position.x,
         top: position.y,
       }}
       onDoubleClick={onDoubleClick}
+      tabIndex={0} // Makes the div focusable for selection effect
     >
-      <div className="p-2 transition-colors rounded hover:bg-gray-700/30">
+      {/* The container for the icon no longer needs special styling */}
+      <div>
         {getIcon()}
       </div>
-      <span className="px-1 text-sm text-center text-white transition-colors rounded group-hover:bg-blue-600/30">
+      
+      {/* CHANGE: Added a text-shadow for readability */}
+      <span 
+        className="px-1 text-sm text-center text-white"
+        style={{ textShadow: '1px 1px 2px rgba(0,0,0,0.7)' }}
+      >
         {name}
       </span>
     </div>
