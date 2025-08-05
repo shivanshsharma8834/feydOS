@@ -30,7 +30,7 @@ const Desktop = () => {
 
   return (
     <div>
-      <div className="relative w-screen h-screen bg-gray-900 bg-[url('/background3.jpg')] bg-cover bg-no-repeat bg-center"
+      <div className="relative w-screen h-screen bg-gray-900 bg-[url('/img24.jpg')] bg-cover bg-no-repeat bg-center"
       >
         {/* Desktop Icons */}
         {desktopIcons.map((icon) => (
